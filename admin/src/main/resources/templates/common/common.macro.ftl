@@ -1,5 +1,5 @@
 <#macro commonName>分布式逻辑管理平台</#macro>
-<#macro commonProjectName><b>XXL</b>GLUE</#macro>
+<#macro commonProjectName><b>王国栋</b>GLUE</#macro>
 <#macro commonStyle>
 
 	<meta charset="utf-8">
