@@ -27,7 +27,6 @@
         <commons-beanutils.version>1.9.2</commons-beanutils.version>
         <commons-lang.version>2.6</commons-lang.version>
         <groovy-all.version>2.4.5</groovy-all.version>
-        <zookeeper.version>3.4.10</zookeeper.version>
     </properties>
     <dependencies>
         <dependency>
@@ -36,10 +35,11 @@
             <version>${groovy-all.version}</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>${zookeeper.version}</version>
+            <version>3.5.5</version>
         </dependency>
 
 

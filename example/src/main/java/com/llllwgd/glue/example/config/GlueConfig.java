@@ -24,7 +24,7 @@ public class GlueConfig {
     @Bean(initMethod = "init", destroyMethod = "destory",value = "glueFactory")
     public GlueFactory getGlueFactory(DataSource dataSource) {
         GlueFactory glueFactory = new GlueFactory();
-        glueFactory.setCacheTimeout(0L);
+        glueFactory.setCacheTimeout(60000L);
         glueFactory.setAppName("llllwgd_test");
         DBGlueLoader glueLoader = new DBGlueLoader();
         glueLoader.setDataSource(dataSource);
