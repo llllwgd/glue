@@ -3,8 +3,7 @@ package com.llllwgd.glue.admin.controller.resolver;
 import com.llllwgd.glue.admin.core.exception.WebException;
 import com.llllwgd.glue.admin.core.result.ReturnT;
 import com.llllwgd.glue.admin.core.util.JacksonUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -18,8 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author xuxueli
  */
+@Slf4j
 public class WebExceptionResolver implements HandlerExceptionResolver {
-    private static transient Logger logger = LoggerFactory.getLogger(WebExceptionResolver.class);
+
 
     @Override
     public ModelAndView resolveException(HttpServletRequest request,
@@ -34,7 +34,7 @@ public class WebExceptionResolver implements HandlerExceptionResolver {
         } else {
             result.setCode(500);
             result.setMsg(ex.toString().replaceAll("\n", "<br/>"));
-            logger.info("system catch exception:{}", ex);
+            log.info("system catch exception:{}", ex);
         }
 
         // 是否JSON返回

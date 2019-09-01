@@ -16,11 +16,14 @@ import java.util.Map;
 @RestController
 public class TestController {
 
+
+
     @GetMapping("/test")
     public Object test(String t) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("telephone", t);
-        Object glue = GlueFactory.glue("xxl_glue_core_exapml.llllwgd_test", map);
+        Object glue1 = GlueFactory.glue("llllwgd_test.static_method", map);
+        Object glue = GlueFactory.glue("llllwgd_test.static_method2", map);
         return glue;
     }
 

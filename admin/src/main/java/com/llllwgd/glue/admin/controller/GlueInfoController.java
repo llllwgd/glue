@@ -1,5 +1,6 @@
 package com.llllwgd.glue.admin.controller;
 
+import com.llllwgd.glue.admin.core.exception.WebException;
 import com.llllwgd.glue.admin.core.model.CodeLog;
 import com.llllwgd.glue.admin.core.model.GlueInfo;
 import com.llllwgd.glue.admin.core.model.Project;
@@ -20,70 +21,69 @@ import java.util.Map;
 @Controller
 @RequestMapping("/glueinfo")
 public class GlueInfoController {
-	
-	@Resource
-	private IGlueInfoService glueInfoService;
-	@Resource
-	private IProjectDao projectDao;
 
-	@RequestMapping
-	public String index(Model model){
+    @Resource
+    private IGlueInfoService glueInfoService;
+    @Resource
+    private IProjectDao projectDao;
 
-		List<Project> projectList = projectDao.loadAll();
-		model.addAttribute("projectList", projectList);
+    @RequestMapping
+    public String index(Model model) {
 
-		return "glueinfo/glueinfo.list";
-	}
-	
-	@RequestMapping("/pageList")
-	@ResponseBody
-	public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
-			@RequestParam(required = false, defaultValue = "10") int length, int projectId, String name){
-		return glueInfoService.pageList(start, length, projectId, name);
-	}
-	
-	@RequestMapping("/delete")
-	@ResponseBody
-	public ReturnT<String> delete(int id){
-		return glueInfoService.delete(id);
-	}
-	
-	@RequestMapping("/add")
-	@ResponseBody
-	public ReturnT<String> add(GlueInfo codeInfo){
-		return glueInfoService.add(codeInfo);
-	}
+        List<Project> projectList = projectDao.loadAll();
+        model.addAttribute("projectList", projectList);
+        return "glueinfo/glueinfo.list";
+    }
 
-	@RequestMapping("/update")
-	@ResponseBody
-	public ReturnT<String> update(GlueInfo codeInfo){
-		return glueInfoService.update(codeInfo);
-	}
+    @RequestMapping("/pageList")
+    @ResponseBody
+    public Map<String, Object> pageList(@RequestParam(required = false, defaultValue = "0") int start,
+                                        @RequestParam(required = false, defaultValue = "10") int length, int projectId, String name) {
+        return glueInfoService.pageList(start, length, projectId, name);
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ReturnT<String> delete(int id) {
+        return glueInfoService.delete(id);
+    }
+
+    @RequestMapping("/add")
+    @ResponseBody
+    public ReturnT<String> add(GlueInfo codeInfo) {
+        return glueInfoService.add(codeInfo);
+    }
+
+    @RequestMapping("/update")
+    @ResponseBody
+    public ReturnT<String> update(GlueInfo codeInfo) {
+        return glueInfoService.update(codeInfo);
+    }
 
 
-	@RequestMapping("/clearCache")
-	@ResponseBody
-	public ReturnT<String> clearCache(int id, String appNames){
-		return glueInfoService.clearCache(id, appNames);
-	}
-	
-	@RequestMapping("/glueWebIde")
-	public String codeSourceEditor(Model model, int id){
-		GlueInfo codeInfo = glueInfoService.load(id);
-		model.addAttribute("codeInfo", codeInfo);
-		
-		if (codeInfo!=null) {
-			List<CodeLog> codeLogList = glueInfoService.loadLogs(id);
-			model.addAttribute("codeLogList", codeLogList);
-		}
-		
-		return "glueinfo/glue.webide";
-	}
-	
-	@RequestMapping("/updateCodeSource")
-	@ResponseBody
-	public ReturnT<String> updateCodeSource(HttpServletRequest request, CodeLog codeLog){
-		return glueInfoService.updateCodeSource(codeLog);
-	}
+    @RequestMapping("/clearCache")
+    @ResponseBody
+    public ReturnT<String> clearCache(int id, String appNames) {
+        return glueInfoService.clearCache(id, appNames);
+    }
+
+    @RequestMapping("/glueWebIde")
+    public String codeSourceEditor(Model model, int id) {
+        GlueInfo codeInfo = glueInfoService.load(id);
+        model.addAttribute("codeInfo", codeInfo);
+
+        if (codeInfo != null) {
+            List<CodeLog> codeLogList = glueInfoService.loadLogs(id);
+            model.addAttribute("codeLogList", codeLogList);
+        }
+
+        return "glueinfo/glue.webide";
+    }
+
+    @RequestMapping("/updateCodeSource")
+    @ResponseBody
+    public ReturnT<String> updateCodeSource(HttpServletRequest request, CodeLog codeLog) {
+        return glueInfoService.updateCodeSource(codeLog);
+    }
 
 }

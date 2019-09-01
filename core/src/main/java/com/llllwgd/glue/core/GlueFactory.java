@@ -39,7 +39,7 @@ public class GlueFactory implements ApplicationContextAware {
     public void setCacheTimeout(long cacheTimeout) {
         this.cacheTimeout = cacheTimeout;
         if (cacheTimeout < -1) {
-            this.cacheTimeout = -1;
+            this.cacheTimeout =1;
         }
     }
 

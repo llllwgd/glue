@@ -1,7 +1,11 @@
 package com.llllwgd.glue.admin.config;
 
+import com.llllwgd.glue.admin.controller.interceptor.CookieInterceptor;
+import com.llllwgd.glue.admin.controller.interceptor.PermissionInterceptor;
+import com.llllwgd.glue.admin.controller.resolver.WebExceptionResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
@@ -40,10 +44,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return freeMarkerViewResolver;
     }
 
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new PermissionInterceptor()).addPathPatterns("/**");
-//        registry.addInterceptor(new CookieInterceptor()).addPathPatterns("/**");
-//        super.addInterceptors(registry);
-//    }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new PermissionInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new CookieInterceptor()).addPathPatterns("/**");
+        super.addInterceptors(registry);
+    }
+
+    @Bean
+    public WebExceptionResolver getWebExceptionResolver() {
+        return new WebExceptionResolver();
+    }
+
 }

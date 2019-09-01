@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="${request.contextPath}/adminlte/plugins/datatables/dataTables.bootstrap.css">
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini <#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>">
+<#--<#if cookieMap?exists && "off" == cookieMap["adminlte_settings"].value >sidebar-collapse</#if>-->
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
     <!-- header -->
 	<@netCommon.commonHeader />
@@ -122,9 +123,9 @@
                     </div>
 
 <textarea name="source" style="display: none;">
-package com.xxl.glue.example.handler;
+package com.llllwgd.glue.core.handler.handler;
 
-import com.xxl.glue.core.handler.GlueHandler;
+import com.llllwgd.glue.core.handler.GlueHandler;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -139,13 +140,8 @@ public class DemoGlueHandler01 implements GlueHandler {
 	@Override
 	public Object handle(Map<String, Object> params) {
 
-		// 手机号码黑名单列表
-		HashSet<String> blackTelephones = new HashSet<String>();
-		blackTelephones.add("15000000000");
-		blackTelephones.add("15000000001");
-		blackTelephones.add("15000000002");
 
-		return blackTelephones;
+		return result;
 	}
 
 }

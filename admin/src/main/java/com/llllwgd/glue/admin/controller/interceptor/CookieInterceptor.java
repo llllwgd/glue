@@ -1,5 +1,6 @@
 package com.llllwgd.glue.admin.controller.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -13,6 +14,7 @@ import java.util.HashMap;
  * push cookies to model as cookieMap
  * @author xuxueli 2015-12-12 18:09:04
  */
+@Slf4j
 public class CookieInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
@@ -20,13 +22,14 @@ public class CookieInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		
 		if (modelAndView!=null && ArrayUtils.isNotEmpty(request.getCookies())) {
-			HashMap<String, Cookie> cookieMap = new HashMap<String, Cookie>();
+			HashMap<String, Cookie> cookieMap = new HashMap<>();
 			for (Cookie ck : request.getCookies()) {
 				cookieMap.put(ck.getName(), ck);
 			}
 			modelAndView.addObject("cookieMap", cookieMap);
+
 		}
-		
+
 		super.postHandle(request, response, handler, modelAndView);
 	}
 	

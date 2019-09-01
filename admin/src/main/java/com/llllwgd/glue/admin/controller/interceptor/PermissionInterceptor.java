@@ -52,7 +52,6 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			PermessionLimit permission = method.getMethodAnnotation(PermessionLimit.class);
 			if (permission == null || permission.limit()) {
 				response.sendRedirect(request.getContextPath() + "/toLogin");
-				//request.getRequestDispatcher("/toLogin").forward(request, response);
 				return false;
 			}
 		}

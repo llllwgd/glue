@@ -25,7 +25,7 @@ public class GlueConfig {
     public GlueFactory getGlueFactory(DataSource dataSource) {
         GlueFactory glueFactory = new GlueFactory();
         glueFactory.setCacheTimeout(0L);
-        glueFactory.setAppName("xxl_glue_core_exapml");
+        glueFactory.setAppName("llllwgd_test");
         DBGlueLoader glueLoader = new DBGlueLoader();
         glueLoader.setDataSource(dataSource);
         glueFactory.setGlueLoader(glueLoader);

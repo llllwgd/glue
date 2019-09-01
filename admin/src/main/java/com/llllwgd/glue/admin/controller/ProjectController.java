@@ -29,27 +29,26 @@ public class ProjectController {
 
 
     @RequestMapping
-    public String index(Model model){
+    public String index(Model model) {
 
         List<Project> projectList = projectDao.loadAll();
         model.addAttribute("projectList", JacksonUtil.writeValueAsString(projectList));
-
         return "project/project.list";
     }
 
     @RequestMapping("/save")
     @ResponseBody
-    public ReturnT<String> save(Project project){
+    public ReturnT<String> save(Project project) {
 
         // valid
         if (StringUtils.isBlank(project.getAppname())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入项目AppName");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "请输入项目AppName");
         }
         if (!project.getAppname().matches("^[a-z0-9_]{4,20}$")) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "项目AppName正确格式为：长度4-20位的小写字母、数字和下划线");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "项目AppName正确格式为：长度4-20位的小写字母、数字和下划线");
         }
         if (StringUtils.isBlank(project.getName())) {
-            return new ReturnT<String>(ReturnT.FAIL_CODE, "请输入项目名称");
+            return new ReturnT<>(ReturnT.FAIL_CODE, "请输入项目名称");
         }
 
         // appname valid
@@ -59,12 +58,12 @@ public class ProjectController {
         }
 
         int ret = projectDao.save(project);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret > 0 ? ReturnT.SUCCESS : ReturnT.FAIL;
     }
 
     @RequestMapping("/update")
     @ResponseBody
-    public ReturnT<String> update(Project project){
+    public ReturnT<String> update(Project project) {
 
         // valid
         if (StringUtils.isBlank(project.getName())) {
@@ -72,12 +71,12 @@ public class ProjectController {
         }
 
         int ret = projectDao.update(project);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret > 0 ? ReturnT.SUCCESS : ReturnT.FAIL;
     }
 
     @RequestMapping("/delete")
     @ResponseBody
-    public ReturnT<String> delCode(int id){
+    public ReturnT<String> delCode(int id) {
 
         int count = glueInfoDao.pageListCount(0, 10, id, null);
         if (count > 0) {
@@ -85,7 +84,7 @@ public class ProjectController {
         }
 
         int ret = projectDao.delete(id);
-        return ret>0?ReturnT.SUCCESS:ReturnT.FAIL;
+        return ret > 0 ? ReturnT.SUCCESS : ReturnT.FAIL;
     }
 
 }

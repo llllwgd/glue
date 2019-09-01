@@ -19,14 +19,19 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public abstract class XxlZkClient implements Watcher {
 
-    private String zkserver;
+    private String zkServer;
 
-    public XxlZkClient(String zkserver) {
-        this.zkserver = zkserver;
+    public XxlZkClient(String zkServer) {
+        this.zkServer = zkServer;
     }
 
     private ZooKeeper zookeeper;
     private ReentrantLock INSTANCE_INIT_LOCK = new ReentrantLock(true);
+
+    /**
+     * 锁超时时间
+     */
+    private static final long LOCK_TIMEOUT = 2L;
 
     /**
      * get or make zookeeper conn
@@ -38,11 +43,11 @@ public abstract class XxlZkClient implements Watcher {
             return zookeeper;
         } else {
             try {
-                if (INSTANCE_INIT_LOCK.tryLock(2, TimeUnit.SECONDS)) {
+                if (INSTANCE_INIT_LOCK.tryLock(LOCK_TIMEOUT, TimeUnit.SECONDS)) {
                     if (zookeeper != null) {
                         return zookeeper;
                     }
-                    zookeeper = new ZooKeeper(zkserver, 10000, this);
+                    zookeeper = new ZooKeeper(zkServer, 10000, this);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -89,7 +94,6 @@ public abstract class XxlZkClient implements Watcher {
         if (stat != null) {
             return stat;
         } else {
-            // make parent (/../../..)
             String parentPath = path.substring(0, path.lastIndexOf("/"));
             if (parentPath.length() < path.length()) {
                 existsOrCreat(parentPath);
@@ -112,6 +116,7 @@ public abstract class XxlZkClient implements Watcher {
         try {
             Stat stat = existsOrCreat(path);
             Stat ret = getClient().setData(path, data.getBytes(), stat != null ? stat.getVersion() : -1);
+            log.info("zookeeper设置值：path:{}:data:{}", path, data);
             return ret;
         } catch (Exception e) {
             e.printStackTrace();
